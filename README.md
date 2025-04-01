@@ -1,1 +1,1 @@
-# dummy-wordle
+# wordle-dummy
