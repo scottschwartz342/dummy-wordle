@@ -1,8 +1,8 @@
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
+import { WordleGame } from "./WordleGame.js";
 
-let row = 0;
-let col = 0;
+const game = new WordleGame();
 
 function isAlpha(str) {
   return str.length === 1 && /^[a-zA-Z]+$/.test(str);
@@ -49,17 +49,17 @@ function App() {
       return;
     }
     const nextboard = board.slice();
-    nextboard[row][col] = e.key;
+    nextboard[game.row][game.col] = e.key;
     setSquares(nextboard);
 
-    if (col / 4 === 1) {
-      row++;
-      col = -1;
+    if (game.col / 4 === 1) {
+      game.row++;
+      game.col = -1;
     }
 
-    col++;
+    game.col++;
 
-    console.log(row, col);
+    console.log(game.row, game.col);
   };
 
   return (
