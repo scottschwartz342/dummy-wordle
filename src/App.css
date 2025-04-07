@@ -7,7 +7,7 @@
   height: 50px;
   display: inline-block;
   text-align: center;
-  line-height: 50px; /* Vertically centers the text */
-  border: 1px solid #000;
+  line-height: 50px;
+  border: 1px solid black;
   margin: 5px;
 }
