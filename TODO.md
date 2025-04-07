@@ -1,0 +1,3 @@
+- [ ] typing changes state,
+  - [ ] start with just typing changes in snake pattern
+  - [ ] add letter variable
