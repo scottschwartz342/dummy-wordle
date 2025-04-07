@@ -1,6 +1,9 @@
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
 
+let row = 0;
+let col = 0;
+
 function isAlpha(str) {
   return str.length === 1 && /^[a-zA-Z]+$/.test(str);
 }
@@ -10,9 +13,6 @@ function Square({ value }) {
 }
 
 function App() {
-  let row = 0;
-  let col = 0;
-
   // set up board
   const [board, setSquares] = useState(
     Array.from({ length: 6 }, () => new Array(5).fill("+"))
@@ -39,6 +39,15 @@ function App() {
     const nextboard = board.slice();
     nextboard[row][col] = e.key;
     setSquares(nextboard);
+
+    if (col / 4 === 1) {
+      row++;
+      col = -1;
+    }
+
+    col++;
+
+    console.log(row, col);
   };
 
   return (
