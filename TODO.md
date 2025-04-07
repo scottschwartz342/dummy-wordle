@@ -1,5 +1,5 @@
-- [ ] typing changes state,
-  - [x] start with just typing changes in snake pattern
-  - [x] add letter variable
-  - [ ] add backspace
-  - [ ] refactor row into its own compoonent
+- [x] typing changes state,
+- [x] start with just typing changes in snake pattern
+- [x] add letter variable
+- [x] refactor row into its own compoonent
+- [ ] add backspace
