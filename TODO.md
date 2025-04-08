@@ -2,4 +2,4 @@
 - [x] start with just typing changes in snake pattern
 - [x] add letter variable
 - [x] refactor row into its own compoonent
-- [ ] add backspace
+- [ ] add basic backspace

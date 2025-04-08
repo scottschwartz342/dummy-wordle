@@ -26,9 +26,7 @@ function BoardRow({ value }) {
 
 function App() {
   // set up board
-  const [board, setSquares] = useState(
-    Array.from({ length: 6 }, () => new Array(5).fill("+"))
-  );
+  const [board, setSquares] = useState(game.board);
 
   // this helps make the div instantly focused so the user can just type
   const divRef = useRef(null);
@@ -39,27 +37,15 @@ function App() {
     }
   }, []);
 
-  const handleKeyDown = (e) => {
-    console.log("Key pressed:", e.key);
-    if (e.key === "Enter") {
-      console.log("WE SHOULD CHGECK GAME");
-      return;
-    } else if (!isAlpha(e.key)) {
-      console.log("Not alphabet");
-      return;
+  const handleKeyDown = (event) => {
+    console.log("Key pressed:", event.key);
+    if (event.key === "Enter") {
+      game.isWinner();
+    } else if (event.key === "Backspace") {
+      game.delete();
+    } else if (isAlpha(event.key)) {
+      setSquares(game.add(event.key));
     }
-    const nextboard = board.slice();
-    nextboard[game.row][game.col] = e.key;
-    setSquares(nextboard);
-
-    if (game.col / 4 === 1) {
-      game.row++;
-      game.col = -1;
-    }
-
-    game.col++;
-
-    console.log(game.row, game.col);
   };
 
   return (
