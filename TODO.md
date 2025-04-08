@@ -2,4 +2,6 @@
 - [x] start with just typing changes in snake pattern
 - [x] add letter variable
 - [x] refactor row into its own compoonent
-- [ ] add basic backspace
+- [x] add basic backspace
+- [x] add enter
+- [ ] add won game
