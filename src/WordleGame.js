@@ -26,7 +26,18 @@ export class WordleGame {
     return nextboard;
   }
 
-  delete() {}
+  delete() {
+    if (this.currCol === 0) {
+      return this.board;
+    }
+
+    this.currCol--;
+
+    const nextboard = this.board.slice();
+    nextboard[this.currRow][this.currCol] = "+";
+
+    return nextboard;
+  }
 
   enter() {
     if (!this.isFullLine()) {

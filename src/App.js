@@ -42,7 +42,7 @@ function App() {
     if (event.key === "Enter") {
       game.enter();
     } else if (event.key === "Backspace") {
-      game.delete();
+      setSquares(game.delete());
     } else if (isAlpha(event.key)) {
       setSquares(game.add(event.key));
     }
