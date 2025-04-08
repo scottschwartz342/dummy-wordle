@@ -8,7 +8,7 @@ export function getDictionary(url) {
       return response.text();
     })
     .then((text) => {
-      return text;
+      return text.split("\n");
     })
     .catch((error) => {
       console.error("Error:", error);

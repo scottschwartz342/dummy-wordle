@@ -4,14 +4,16 @@ export class WordleGame {
   board;
   currRow;
   currCol;
-  wordleLA;
-  wordleTA;
+  wordleLA; //can be guessed and word
+  wordleTA; //can be gues but not word
+  solutionWord;
 
   async init() {
     this.wordleLA = await getDictionary("wordle-La.txt");
     this.wordleTA = await getDictionary("wordle-Ta.txt");
-    console.log(this.wordleLA);
-    console.log(this.wordleLA);
+    let randomIndex = Math.floor(Math.random() * this.wordleLA.length);
+    this.solutionWord = this.wordleLA[randomIndex];
+    console.log(this.solutionWord);
   }
 
   constructor() {
