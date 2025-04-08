@@ -1,12 +1,24 @@
+import { getDictionary } from "./getDictionary.js";
+
 export class WordleGame {
   board;
   currRow;
   currCol;
+  wordleLA;
+  wordleTA;
+
+  async init() {
+    this.wordleLA = await getDictionary("wordle-La.txt");
+    this.wordleTA = await getDictionary("wordle-Ta.txt");
+    console.log(this.wordleLA);
+    console.log(this.wordleLA);
+  }
 
   constructor() {
     this.board = Array.from({ length: 6 }, () => new Array(5).fill("+"));
     this.currRow = 0;
     this.currCol = 0;
+    this.init();
   }
 
   isFullLine() {
