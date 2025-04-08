@@ -40,7 +40,7 @@ function App() {
   const handleKeyDown = (event) => {
     console.log("Key pressed:", event.key);
     if (event.key === "Enter") {
-      game.isWinner();
+      game.enter();
     } else if (event.key === "Backspace") {
       game.delete();
     } else if (isAlpha(event.key)) {

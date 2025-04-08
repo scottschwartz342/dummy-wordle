@@ -9,14 +9,17 @@ export class WordleGame {
     this.currCol = 0;
   }
 
+  isFullLine() {
+    return this.currCol / 5 === 1;
+  }
+
   add(key) {
+    if (this.isFullLine()) {
+      return this.board;
+    }
+
     const nextboard = this.board.slice();
     nextboard[this.currRow][this.currCol] = key;
-
-    if (this.currCol / 4 === 1) {
-      this.currRow++;
-      this.currCol = -1;
-    }
 
     this.currCol++;
 
@@ -25,7 +28,12 @@ export class WordleGame {
 
   delete() {}
 
-  isWinner() {
-    // TO DO
+  enter() {
+    if (!this.isFullLine()) {
+      return;
+    }
+
+    this.currCol = 0;
+    this.currRow++;
   }
 }
