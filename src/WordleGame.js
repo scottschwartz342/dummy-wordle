@@ -1,6 +1,11 @@
 import { getDictionary } from "./getDictionary.js";
 
 export class WordleGame {
+  defSquare = {
+    letter: "+",
+    color: "white",
+  };
+
   board;
   currRow;
   currCol;
@@ -14,17 +19,18 @@ export class WordleGame {
     let randomIndex = Math.floor(Math.random() * this.wordleLA.length);
     this.solutionWord = this.wordleLA[randomIndex];
     console.log(this.solutionWord);
+
+    this.wordleLA = new Set(this.wordleLA);
+    this.wordleTA = new Set(this.wordleTA);
   }
 
   constructor() {
-    this.board = Array.from({ length: 6 }, () => new Array(5).fill("+"));
+    this.board = Array.from({ length: 6 }, () =>
+      new Array(5).fill(this.defSquare)
+    );
     this.currRow = 0;
     this.currCol = 0;
     this.init();
-  }
-
-  isFullLine() {
-    return this.currCol / 5 === 1;
   }
 
   add(key) {
@@ -32,12 +38,15 @@ export class WordleGame {
       return this.board;
     }
 
-    const nextboard = this.board.slice();
-    nextboard[this.currRow][this.currCol] = key;
+    const nextBoard = this.board.slice();
+    nextBoard[this.currRow][this.currCol] = {
+      letter: key,
+      color: "white",
+    };
 
     this.currCol++;
 
-    return nextboard;
+    return nextBoard;
   }
 
   delete() {
@@ -47,18 +56,70 @@ export class WordleGame {
 
     this.currCol--;
 
-    const nextboard = this.board.slice();
-    nextboard[this.currRow][this.currCol] = "+";
+    const nextBoard = this.board.slice();
+    nextBoard[this.currRow][this.currCol] = this.defSquare;
 
-    return nextboard;
+    return nextBoard;
+  }
+
+  correct() {
+    for (let i = 0; i < 5; i++) {
+      if (this.board[this.currRow][i].letter !== this.solutionWord[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  isFullLine() {
+    return this.currCol / 5 === 1;
+  }
+
+  isValidWord() {
+    let currGuess = "";
+
+    for (let i = 0; i < 5; i++) {
+      currGuess += this.board[this.currRow][i].letter;
+    }
+
+    return this.wordleLA.has(currGuess) || this.wordleTA.has(currGuess);
+  }
+
+  updateColors() {
+    const nextBoard = this.board.slice();
+    let solutionWordSet = new Set(this.solutionWord);
+
+    for (let i = 0; i < 5; i++) {
+      let currGuessedLetter = this.board[this.currRow][i].letter;
+
+      if (currGuessedLetter === this.solutionWord[i]) {
+        nextBoard[this.currRow][i].color = "green";
+      } else if (solutionWordSet.has(currGuessedLetter)) {
+        nextBoard[this.currRow][i].color = "yellow";
+      } else {
+        nextBoard[this.currRow][i].color = "black";
+      }
+    }
+
+    return nextBoard;
   }
 
   enter() {
-    if (!this.isFullLine()) {
-      return;
+    if (!this.isFullLine() || !this.isValidWord()) {
+      return this.board;
     }
 
-    this.currCol = 0;
-    this.currRow++;
+    const updatedColoredBoard = this.updateColors();
+
+    if (this.correct()) {
+      console.log("Correct");
+    } else {
+      console.log("Wrong");
+      this.currCol = 0;
+      this.currRow++;
+    }
+
+    return updatedColoredBoard;
   }
 }

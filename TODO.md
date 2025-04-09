@@ -5,5 +5,9 @@
 - [x] add basic backspace
 - [x] add enter
 - [x] fetch funciton to set up dictionaries
-- [ ] add solution field to WordleGame
-- [ ] add colors (first thought i have is to create a color matrix that relats to board)
+- [x] add solution field to WordleGame
+
+Ok at this point there are ~two functionalities left:
+
+- [x] add colors (first thought i have is to create a color matrix that relats to board)
+- [ ] reponses

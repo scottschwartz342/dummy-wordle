@@ -9,7 +9,7 @@ function isAlpha(str) {
 }
 
 function Square({ value }) {
-  return <div className="square">{value}</div>;
+  return <div className={`square ${value.color}`}>{value.letter}</div>;
 }
 
 function BoardRow({ value }) {
@@ -40,7 +40,7 @@ function App() {
   const handleKeyDown = (event) => {
     console.log("Key pressed:", event.key);
     if (event.key === "Enter") {
-      game.enter();
+      setSquares(game.enter());
     } else if (event.key === "Backspace") {
       setSquares(game.delete());
     } else if (isAlpha(event.key)) {
