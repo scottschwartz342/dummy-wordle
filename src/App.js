@@ -58,7 +58,7 @@ function App() {
   return (
     <div className="App" ref={divRef} tabIndex="0" onKeyDown={handleKeyDown}>
       <h1>Hello</h1>
-      <p>Type out your 5-lettered guess and hit "Enter". Remember:</p>
+      <p>Type out a 5-lettered guess and hit "Enter". Remember:</p>
       <ul>
         <li>Gray: not in the word</li>
         <li>Yellow: in the word but not in the correct spot </li>
