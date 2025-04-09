@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { WordleGame } from "./WordleGame.js";
 
 const game = new WordleGame();
@@ -29,40 +29,40 @@ function BoardRow({ value }) {
 }
 
 function App() {
-  // set up board
   const [board, setSquares] = useState(game.board);
-  const [message, setDialogue] = useState("Guess, then hit 'Enter'");
-
-  // this helps make the div instantly focused so the user can just type
-  const divRef = useRef(null);
+  const [message, setDialogue] = useState(
+    "Type out a 5-lettered guess and hit 'Enter'"
+  );
 
   useEffect(() => {
-    if (divRef.current) {
-      divRef.current.focus();
-    }
+    const handleGlobalKeyDown = (event) => {
+      console.log("Key pressed:", event.key);
+      if (event.key === "Enter") {
+        const { newBoard, newMessage } = game.enter();
+        setSquares(newBoard);
+        setDialogue(newMessage);
+      } else if (event.key === "Backspace") {
+        setSquares(game.delete());
+      } else if (isAlpha(event.key)) {
+        setSquares(game.add(event.key));
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleGlobalKeyDown);
+    };
   }, []);
 
-  const handleKeyDown = (event) => {
-    console.log("Key pressed:", event.key);
-    if (event.key === "Enter") {
-      const { newBoard, newMessage } = game.enter();
-      setSquares(newBoard);
-      setDialogue(newMessage);
-    } else if (event.key === "Backspace") {
-      setSquares(game.delete());
-    } else if (isAlpha(event.key)) {
-      setSquares(game.add(event.key));
-    }
-  };
-
   return (
-    <div className="App" ref={divRef} tabIndex="0" onKeyDown={handleKeyDown}>
+    <div className="App" tabIndex="0">
       <h1>Hello</h1>
-      <p>Type out a 5-lettered guess and hit "Enter". Remember:</p>
       <ul>
-        <li>Gray: not in the word</li>
+        <li>Black: not in the word</li>
         <li>Yellow: in the word but not in the correct spot </li>
         <li>Green: in the right spot</li>
+        <li>Red: already guessed and is Black</li>
       </ul>
       <Dialogue message={message} />
       <BoardRow value={board[0]} />

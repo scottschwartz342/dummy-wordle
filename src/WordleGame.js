@@ -12,6 +12,10 @@ export class WordleGame {
   wordleLA; //can be guessed and word
   wordleTA; //can be gues but not word
   solutionWord;
+  gameOver;
+  blackLetters;
+  yellowLetters;
+  greenLetters;
 
   async init() {
     this.wordleLA = await getDictionary("wordle-La.txt");
@@ -30,18 +34,30 @@ export class WordleGame {
     );
     this.currRow = 0;
     this.currCol = 0;
+    this.gameOver = false;
+    this.blackLetters = new Set();
+    this.yellowLetters = new Set();
+    this.greenLetters = new Set();
     this.init();
   }
 
   add(key) {
-    if (this.isFullLine()) {
+    if (this.isFullLine() || this.gameOver) {
       return this.board;
     }
 
+    key = key.toLowerCase();
+
     const nextBoard = this.board.slice();
+    let newColor = "white";
+
+    if (this.blackLetters.has(key)) {
+      newColor = "red";
+    }
+
     nextBoard[this.currRow][this.currCol] = {
       letter: key,
-      color: "white",
+      color: newColor,
     };
 
     this.currCol++;
@@ -50,13 +66,14 @@ export class WordleGame {
   }
 
   delete() {
-    if (this.currCol === 0) {
+    if (this.currCol === 0 || this.gameOver) {
       return this.board;
     }
 
     this.currCol--;
 
     const nextBoard = this.board.slice();
+
     nextBoard[this.currRow][this.currCol] = this.defSquare;
 
     return nextBoard;
@@ -95,10 +112,14 @@ export class WordleGame {
 
       if (currGuessedLetter === this.solutionWord[i]) {
         nextBoard[this.currRow][i].color = "green";
+        this.greenLetters.add(currGuessedLetter);
       } else if (solutionWordSet.has(currGuessedLetter)) {
         nextBoard[this.currRow][i].color = "yellow";
+        this.yellowLetters.add(currGuessedLetter);
       } else {
         nextBoard[this.currRow][i].color = "black";
+        this.blackLetters.add(currGuessedLetter);
+        console.log(this.blackLetters);
       }
     }
 
@@ -106,7 +127,7 @@ export class WordleGame {
   }
 
   enter() {
-    if (!this.isFullLine() || !this.isValidWord()) {
+    if (!this.isFullLine() || !this.isValidWord() || this.gameOver) {
       return {
         newBoard: this.board,
         newMessage: "Invalid Guess",
@@ -118,12 +139,17 @@ export class WordleGame {
 
     if (this.correct()) {
       console.log("Correct");
-      newMessage = "Winner! Winner! Chicken Dinner!";
+      newMessage = "Winner! Winner! Chicken Dinner! \n Refresh to Play Again.";
     } else {
       console.log("Wrong");
-      newMessage = "Not quit... :(";
       this.currCol = 0;
       this.currRow++;
+      if (this.currRow >= 6) {
+        newMessage = "Sorry, GAME OVER! \n Refresh to Play Again.";
+        this.gameOver = true;
+      } else {
+        newMessage = "Not quit... :(";
+      }
     }
 
     return {
