@@ -3,7 +3,7 @@ import { getDictionary } from "./getDictionary.js";
 export class WordleGame {
   defSquare = {
     letter: "+",
-    color: "white",
+    color: "clear",
   };
 
   board;
@@ -107,19 +107,28 @@ export class WordleGame {
 
   enter() {
     if (!this.isFullLine() || !this.isValidWord()) {
-      return this.board;
+      return {
+        newBoard: this.board,
+        newMessage: "Invalid Guess",
+      };
     }
 
     const updatedColoredBoard = this.updateColors();
+    let newMessage = "";
 
     if (this.correct()) {
       console.log("Correct");
+      newMessage = "Winner! Winner! Chicken Dinner!";
     } else {
       console.log("Wrong");
+      newMessage = "Not quit... :(";
       this.currCol = 0;
       this.currRow++;
     }
 
-    return updatedColoredBoard;
+    return {
+      newBoard: updatedColoredBoard,
+      newMessage: newMessage,
+    };
   }
 }

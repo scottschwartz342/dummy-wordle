@@ -12,6 +12,10 @@ function Square({ value }) {
   return <div className={`square ${value.color}`}>{value.letter}</div>;
 }
 
+function Dialogue({ message }) {
+  return <p className="dialogue">{message}</p>;
+}
+
 function BoardRow({ value }) {
   return (
     <div className="board-row">
@@ -27,6 +31,7 @@ function BoardRow({ value }) {
 function App() {
   // set up board
   const [board, setSquares] = useState(game.board);
+  const [message, setDialogue] = useState("Guess, then hit 'Enter'");
 
   // this helps make the div instantly focused so the user can just type
   const divRef = useRef(null);
@@ -40,7 +45,9 @@ function App() {
   const handleKeyDown = (event) => {
     console.log("Key pressed:", event.key);
     if (event.key === "Enter") {
-      setSquares(game.enter());
+      const { newBoard, newMessage } = game.enter();
+      setSquares(newBoard);
+      setDialogue(newMessage);
     } else if (event.key === "Backspace") {
       setSquares(game.delete());
     } else if (isAlpha(event.key)) {
@@ -51,6 +58,13 @@ function App() {
   return (
     <div className="App" ref={divRef} tabIndex="0" onKeyDown={handleKeyDown}>
       <h1>Hello</h1>
+      <p>Type out your 5-lettered guess and hit "Enter". Remember:</p>
+      <ul>
+        <li>Gray: not in the word</li>
+        <li>Yellow: in the word but not in the correct spot </li>
+        <li>Green: in the right spot</li>
+      </ul>
+      <Dialogue message={message} />
       <BoardRow value={board[0]} />
       <BoardRow value={board[1]} />
       <BoardRow value={board[2]} />
