@@ -20,8 +20,8 @@ export class WordleGame {
   gameOver: boolean;
 
   async init() {
-    let tempDictionaryLA: string[] = await getDictionary("wordle-La.txt");
-    let tempDictionaryTA: string[] = await getDictionary("wordle-Ta.txt");
+    let tempDictionaryLA: string[] = await getDictionary("wordle-La.json");
+    let tempDictionaryTA: string[] = await getDictionary("wordle-Ta.json");
 
     let randomIndex = Math.floor(Math.random() * tempDictionaryLA.length);
     this.solutionWord = tempDictionaryLA[randomIndex];

@@ -1,13 +1,14 @@
 export function getDictionary(url: string): Promise<string[]> {
-  return fetch(url)
+  return fetch(`${process.env.PUBLIC_URL}/${url}`)
     .then((response: Response) => {
       if (!response.ok) {
         throw new Error(`${response.status}`);
       }
-      return response.text();
+      console.log("Dictionary response:", response);
+      return response.json();
     })
-    .then((text: string) => {
-      return text.split("\n");
+    .then((data: string[]) => {
+      return data;
     })
     .catch((error: Error) => {
       console.error("Error:", error);
