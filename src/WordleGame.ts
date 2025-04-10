@@ -1,6 +1,6 @@
 import {
   getDictionary,
-  Sqaure,
+  // Square,
   Colors,
   Board,
   defaultSquare,
@@ -90,7 +90,7 @@ export class WordleGame {
     return nextBoard;
   }
 
-  correct(): Boolean {
+  correct(): boolean {
     for (let i = 0; i < 5; i++) {
       if (this.board[this.currRow][i].letter !== this.solutionWord[i]) {
         return false;
@@ -100,7 +100,7 @@ export class WordleGame {
     return true;
   }
 
-  isValidWord(): Boolean {
+  isValidWord(): boolean {
     let currGuess: string = "";
 
     for (let i = 0; i < 5; i++) {
@@ -137,10 +137,17 @@ export class WordleGame {
   }
 
   enter(): EnterResponse {
-    if (!this.isFullLine() || !this.isValidWord() || this.gameOver) {
+    if (!this.isFullLine() || !this.isValidWord()) {
       return {
         newBoard: this.board,
         newMessage: "Invalid Guess",
+      };
+    }
+
+    if (this.gameOver) {
+      return {
+        newBoard: this.board,
+        newMessage: "Sorry, GAME OVER! \n Refresh to Play Again.",
       };
     }
 
@@ -158,7 +165,7 @@ export class WordleGame {
         newMessage = "Sorry, GAME OVER! \n Refresh to Play Again.";
         this.gameOver = true;
       } else {
-        newMessage = "Not quit... :(";
+        newMessage = "Not quite... :(";
       }
     }
 
