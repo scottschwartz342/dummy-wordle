@@ -28,6 +28,7 @@ export class WordleGame {
 
     this.dictionaryPossibleSolutions = new Set(tempDictionaryLA);
     this.dictionaryNonSolutions = new Set(tempDictionaryTA);
+    console.log(this.solutionWord);
   }
 
   constructor() {
@@ -45,7 +46,6 @@ export class WordleGame {
     this.gameOver = false;
 
     this.init();
-    console.log(this.solutionWord);
   }
 
   isFullLine() {
