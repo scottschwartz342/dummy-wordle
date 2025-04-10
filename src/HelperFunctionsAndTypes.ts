@@ -33,3 +33,15 @@ export type EnterResponse = {
   newBoard: Board;
   newMessage: string;
 };
+
+export interface SquareProps {
+  value: Square;
+}
+
+export interface DialogueProps {
+  message: string;
+}
+
+export interface BoardRowProps {
+  value: Square[];
+}
