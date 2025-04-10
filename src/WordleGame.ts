@@ -136,17 +136,17 @@ export class WordleGame {
   }
 
   enter(): EnterResponse {
-    if (!this.isFullLine() || !this.isValidWord()) {
-      return {
-        newBoard: this.board,
-        newMessage: "Invalid Guess",
-      };
-    }
-
     if (this.gameOver) {
       return {
         newBoard: this.board,
         newMessage: "Sorry, GAME OVER! \n Refresh to Play Again.",
+      };
+    }
+
+    if (!this.isFullLine() || !this.isValidWord()) {
+      return {
+        newBoard: this.board,
+        newMessage: "Invalid Guess",
       };
     }
 
