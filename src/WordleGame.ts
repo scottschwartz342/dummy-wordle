@@ -129,7 +129,6 @@ export class WordleGame {
       } else {
         nextBoard[this.currRow][i].color = "black";
         this.blackLetters.add(currGuessedLetter);
-        console.log(this.blackLetters);
       }
     }
 
