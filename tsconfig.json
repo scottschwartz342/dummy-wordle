@@ -15,9 +15,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    // "noUnusedLocals": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src"]
 }
