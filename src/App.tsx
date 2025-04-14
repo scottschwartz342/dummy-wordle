@@ -84,7 +84,7 @@ function App() {
       <ul>
         <li>Black: not in the word</li>
         <li>Yellow: in the word but not in the correct spot</li>
-        <li>Green: in the right spot</li>
+        <li>Green: in the correct spot</li>
         <li>Red: already guessed and is Black</li>
       </ul>
       <Dialogue message={message} />
