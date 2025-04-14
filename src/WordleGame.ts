@@ -161,7 +161,7 @@ export class WordleGame {
       this.currCol = 0;
       this.currRow++;
       if (this.currRow >= 6) {
-        newMessage = "Sorry, GAME OVER! \n Refresh to Play Again.";
+        newMessage = `Sorry, GAME OVER! The word was ${this.solutionWord.toUpperCase()}\n Refresh to Play Again.`;
         this.gameOver = true;
       } else {
         newMessage = "Not quite... :(";

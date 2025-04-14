@@ -63,7 +63,7 @@ function App() {
 
   return (
     <div className="App" tabIndex={0}>
-      <h1>Hello</h1>
+      <h1>Hello,</h1>
       <ul>
         <li>Black: not in the word</li>
         <li>Yellow: in the word but not in the correct spot </li>
