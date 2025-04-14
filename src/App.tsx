@@ -79,11 +79,7 @@ function App() {
 
   return (
     <div className="App">
-      <input
-        type="text"
-        ref={hiddenInputRef}
-        style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
-      />
+      <input type="text" ref={hiddenInputRef} className="hidden-input" />
       <h1>Hello</h1>
       <ul>
         <li>Black: not in the word</li>
