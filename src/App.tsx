@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { WordleGame } from "./WordleGame";
 import {
   SquareProps,
@@ -40,6 +40,8 @@ function App() {
     "Type out a 5-lettered guess and hit 'Enter'"
   );
 
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       console.log("Key pressed:", event.key);
@@ -61,12 +63,31 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleTouchStart = () => {
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.focus();
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart);
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, []);
+
   return (
-    <div className="App" tabIndex={0}>
+    <div className="App">
+      <input
+        type="text"
+        ref={hiddenInputRef}
+        style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
+      />
       <h1>Hello</h1>
       <ul>
         <li>Black: not in the word</li>
-        <li>Yellow: in the word but not in the correct spot </li>
+        <li>Yellow: in the word but not in the correct spot</li>
         <li>Green: in the right spot</li>
         <li>Red: already guessed and is Black</li>
       </ul>
