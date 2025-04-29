@@ -42,6 +42,10 @@ function App() {
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
+  const runAI = () => {
+    console.log("Hello");
+  };
+
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       console.log("Key pressed:", event.key);
@@ -87,6 +91,9 @@ function App() {
         <li>Green: in the correct spot</li>
         <li>Red: already guessed and is Black</li>
       </ul>
+      <button id="ai-button" onClick={runAI}>
+        Have AI Solve
+      </button>
       <Dialogue message={message} />
       <BoardRow value={board[0]} />
       <BoardRow value={board[1]} />
