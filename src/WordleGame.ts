@@ -17,8 +17,8 @@ export class WordleGame {
   dictionaryNonSolutions: Set<string>;
   solutionWord: string;
   blackLetters: Set<string>;
-  yellowLetters: Set<string>;
-  greenLetters: Set<string>;
+  yellowLetters: Map<number, Set<string>>;
+  greenLetters: Map<number, string | null>;
   gameOver: boolean;
 
   constructor() {
@@ -28,8 +28,20 @@ export class WordleGame {
     this.currRow = 0;
     this.currCol = 0;
     this.solutionWord = "";
-    this.yellowLetters = new Set();
-    this.greenLetters = new Set();
+    this.yellowLetters = new Map<number, Set<string>>([
+      [0, new Set()],
+      [1, new Set()],
+      [2, new Set()],
+      [3, new Set()],
+      [4, new Set()],
+    ]);
+    this.greenLetters = new Map<number, string | null>([
+      [0, null],
+      [1, null],
+      [2, null],
+      [3, null],
+      [4, null],
+    ]);
     this.blackLetters = new Set();
     this.gameOver = false;
 
@@ -115,10 +127,11 @@ export class WordleGame {
 
       if (currGuessedLetter === this.solutionWord[i]) {
         nextBoard[this.currRow][i].color = "green";
-        this.greenLetters.add(`${currGuessedLetter}${i}`);
+        this.greenLetters.set(i, currGuessedLetter);
+        console.log("yu");
       } else if (solutionWordSet.has(currGuessedLetter)) {
         nextBoard[this.currRow][i].color = "yellow";
-        this.yellowLetters.add(currGuessedLetter);
+        this.yellowLetters.get(i)?.add(currGuessedLetter);
       } else {
         nextBoard[this.currRow][i].color = "black";
         this.blackLetters.add(currGuessedLetter);

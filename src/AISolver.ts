@@ -5,14 +5,14 @@ export class AISolver {
   allWordsList: Yallist<string>;
   guessCount: number;
   blackLetters: Set<string>;
-  yellowLetters: Set<string>;
-  greenLetters: Set<string>;
+  yellowLetters: Map<number, Set<string>>;
+  greenLetters: Map<number, string | null>;
 
   constructor(
     currRow: number,
     blackLetters: Set<string>,
-    yellowLetters: Set<string>,
-    greenLetters: Set<string>
+    yellowLetters: Map<number, Set<string>>,
+    greenLetters: Map<number, string | null>
   ) {
     this.allWordsList = Yallist.create(allWords);
     this.guessCount = currRow;

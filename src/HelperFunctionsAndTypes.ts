@@ -1,4 +1,4 @@
-export function getDictionary(url: string): Promise<string[]> {
+export async function getDictionary(url: string): Promise<string[]> {
   return fetch(`${process.env.PUBLIC_URL}/${url}`)
     .then((response: Response) => {
       if (!response.ok) {
