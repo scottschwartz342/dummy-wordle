@@ -43,7 +43,15 @@ function App() {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   const runAI = () => {
-    game.runAI();
+    const aiGuess: string = game.runAI();
+
+    for (let i = 0; i < aiGuess.length; i++) {
+      setSquares(game.add(aiGuess[i]));
+    }
+
+    const { newBoard, newMessage } = game.enter();
+    setSquares(newBoard);
+    setDialogue(newMessage);
   };
 
   useEffect(() => {

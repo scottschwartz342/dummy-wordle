@@ -3,51 +3,62 @@ import allWords from "./data/wordle-All.json";
 
 export class AISolver {
   allWordsList: Yallist<string>;
-  guessCount: number;
   blackLetters: Set<string>;
   yellowLetters: Map<number, Set<string>>;
   greenLetters: Map<number, string | null>;
 
-  constructor(
-    currRow: number,
-    blackLetters: Set<string>,
-    yellowLetters: Map<number, Set<string>>,
-    greenLetters: Map<number, string | null>
-  ) {
+  constructor() {
     this.allWordsList = Yallist.create(allWords);
-    this.guessCount = currRow;
-    this.blackLetters = blackLetters;
-    this.yellowLetters = yellowLetters;
-    this.greenLetters = greenLetters;
+    this.blackLetters = new Set<string>();
+    this.yellowLetters = new Map<number, Set<string>>();
+    this.greenLetters = new Map<number, string | null>();
 
     console.log("AI INIT DONE");
     console.log(this.allWordsList.length);
     console.log(this.allWordsList);
   }
 
-  canBeWord(word: string): boolean {
-    return false;
+  update(
+    blackLetters: Set<string>,
+    yellowLetters: Map<number, Set<string>>,
+    greenLetters: Map<number, string | null>
+  ) {
+    this.blackLetters = blackLetters;
+    this.yellowLetters = yellowLetters;
+    this.greenLetters = greenLetters;
   }
 
-  solve() {
-    let guessesMadeByAI = [];
-
+  solve(): string {
     console.log(this.greenLetters);
+    console.log(this.yellowLetters);
 
-    while (this.guessCount < 6) {
-      console.log(this.allWordsList.length);
+    let currBestGuess: string = "";
+    let currBestProb: number = 0;
 
-      let currWordNode = this.allWordsList.head;
-      while (currWordNode) {
-        const nextNode = currWordNode.next;
+    console.log(this.allWordsList.length);
 
-        if (!this.canBeWord(currWordNode.value)) {
+    let currWordNode = this.allWordsList.head;
+    while (currWordNode) {
+      const nextNode = currWordNode.next;
+      let currProb = 0;
+
+      for (let i = 0; i < 5; i++) {
+        const currGuessedLetter: string = currWordNode.value[i];
+
+        if (
+          this.blackLetters.has(currGuessedLetter) ||
+          this.yellowLetters.get(i)?.has(currGuessedLetter) ||
+          this.greenLetters.get(i) !== currGuessedLetter
+        ) {
           this.allWordsList.removeNode(currWordNode);
+          break;
+        } else {
         }
-
-        currWordNode = nextNode;
       }
-      this.guessCount++;
+
+      currWordNode = nextNode;
     }
+
+    return currBestGuess;
   }
 }

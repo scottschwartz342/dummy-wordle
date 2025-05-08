@@ -20,6 +20,7 @@ export class WordleGame {
   yellowLetters: Map<number, Set<string>>;
   greenLetters: Map<number, string | null>;
   gameOver: boolean;
+  aiSolver: AISolver;
 
   constructor() {
     this.board = Array.from({ length: 6 }, () =>
@@ -51,6 +52,8 @@ export class WordleGame {
     this.dictionaryPossibleSolutions = new Set(dictionaryLa);
     this.dictionaryNonSolutions = new Set(dictionaryTa);
     console.log(this.solutionWord);
+
+    this.aiSolver = new AISolver();
   }
 
   isFullLine() {
@@ -123,12 +126,11 @@ export class WordleGame {
     let solutionWordSet: Set<string> = new Set(this.solutionWord);
 
     for (let i = 0; i < 5; i++) {
-      let currGuessedLetter: string = this.board[this.currRow][i].letter;
+      const currGuessedLetter: string = this.board[this.currRow][i].letter;
 
       if (currGuessedLetter === this.solutionWord[i]) {
         nextBoard[this.currRow][i].color = "green";
         this.greenLetters.set(i, currGuessedLetter);
-        console.log("yu");
       } else if (solutionWordSet.has(currGuessedLetter)) {
         nextBoard[this.currRow][i].color = "yellow";
         this.yellowLetters.get(i)?.add(currGuessedLetter);
@@ -180,20 +182,17 @@ export class WordleGame {
     };
   }
 
-  runAI(): void {
+  runAI(): string {
     if (this.gameOver) {
-      return;
+      return "";
     }
 
-    const aiSolver = new AISolver(
-      this.currRow,
+    this.aiSolver.update(
       this.blackLetters,
       this.yellowLetters,
       this.greenLetters
     );
 
-    aiSolver.solve();
-
-    this.gameOver = true;
+    return this.aiSolver.solve();
   }
 }
