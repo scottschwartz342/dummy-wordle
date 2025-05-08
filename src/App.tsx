@@ -43,7 +43,7 @@ function App() {
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
   const runAI = () => {
-    console.log("Hello");
+    game.runAI();
   };
 
   useEffect(() => {

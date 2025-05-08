@@ -1,18 +1,12 @@
-import { getDictionary } from "./HelperFunctionsAndTypes";
 import { Yallist } from "yallist";
+import allWords from "./data/wordle-All.json";
 
 export class AISolver {
-  allWords: Yallist<string>;
+  allWordsList: Yallist<string>;
   guessCount: number;
   blackLetters: Set<string>;
   yellowLetters: Set<string>;
   greenLetters: Set<string>;
-
-  async init() {
-    this.allWords = Yallist.create<string>(
-      await getDictionary("wordle-All.json")
-    );
-  }
 
   constructor(
     currRow: number,
@@ -20,22 +14,39 @@ export class AISolver {
     yellowLetters: Set<string>,
     greenLetters: Set<string>
   ) {
-    this.allWords = Yallist.create<string>();
+    this.allWordsList = Yallist.create(allWords);
     this.guessCount = currRow;
     this.blackLetters = blackLetters;
     this.yellowLetters = yellowLetters;
     this.greenLetters = greenLetters;
 
-    this.init();
+    console.log("AI INIT DONE");
+    console.log(this.allWordsList.length);
+    console.log(this.allWordsList);
+  }
+
+  canBeWord(word: string): boolean {
+    return false;
   }
 
   solve() {
     let guessesMadeByAI = [];
 
-    while (this.guessCount < 6) {
-      for (const word of this.allWords) {
-      }
+    console.log(this.greenLetters);
 
+    while (this.guessCount < 6) {
+      console.log(this.allWordsList.length);
+
+      let currWordNode = this.allWordsList.head;
+      while (currWordNode) {
+        const nextNode = currWordNode.next;
+
+        if (!this.canBeWord(currWordNode.value)) {
+          this.allWordsList.removeNode(currWordNode);
+        }
+
+        currWordNode = nextNode;
+      }
       this.guessCount++;
     }
   }

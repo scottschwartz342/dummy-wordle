@@ -1,11 +1,13 @@
 import {
-  getDictionary,
-  // Square,
   Colors,
   Board,
   defaultSquare,
   EnterResponse,
 } from "./HelperFunctionsAndTypes.ts";
+import { AISolver } from "./AISolver.ts";
+
+import dictionaryLa from "./data/wordle-La.json";
+import dictionaryTa from "./data/wordle-Ta.json";
 
 export class WordleGame {
   board: Board;
@@ -19,33 +21,24 @@ export class WordleGame {
   greenLetters: Set<string>;
   gameOver: boolean;
 
-  async init() {
-    let tempDictionaryLA: string[] = await getDictionary("wordle-La.json");
-    let tempDictionaryTA: string[] = await getDictionary("wordle-Ta.json");
-
-    let randomIndex = Math.floor(Math.random() * tempDictionaryLA.length);
-    this.solutionWord = tempDictionaryLA[randomIndex];
-
-    this.dictionaryPossibleSolutions = new Set(tempDictionaryLA);
-    this.dictionaryNonSolutions = new Set(tempDictionaryTA);
-    console.log(this.solutionWord);
-  }
-
   constructor() {
     this.board = Array.from({ length: 6 }, () =>
       new Array(5).fill(defaultSquare)
     );
     this.currRow = 0;
     this.currCol = 0;
-    this.dictionaryPossibleSolutions = new Set();
-    this.dictionaryNonSolutions = new Set();
     this.solutionWord = "";
     this.yellowLetters = new Set();
     this.greenLetters = new Set();
     this.blackLetters = new Set();
     this.gameOver = false;
 
-    this.init();
+    let randomIndex = Math.floor(Math.random() * dictionaryLa.length);
+    this.solutionWord = dictionaryLa[randomIndex];
+
+    this.dictionaryPossibleSolutions = new Set(dictionaryLa);
+    this.dictionaryNonSolutions = new Set(dictionaryTa);
+    console.log(this.solutionWord);
   }
 
   isFullLine() {
@@ -122,7 +115,7 @@ export class WordleGame {
 
       if (currGuessedLetter === this.solutionWord[i]) {
         nextBoard[this.currRow][i].color = "green";
-        this.greenLetters.add(currGuessedLetter);
+        this.greenLetters.add(`${currGuessedLetter}${i}`);
       } else if (solutionWordSet.has(currGuessedLetter)) {
         nextBoard[this.currRow][i].color = "yellow";
         this.yellowLetters.add(currGuessedLetter);
@@ -172,5 +165,22 @@ export class WordleGame {
       newBoard: updatedColoredBoard,
       newMessage: newMessage,
     };
+  }
+
+  runAI(): void {
+    if (this.gameOver) {
+      return;
+    }
+
+    const aiSolver = new AISolver(
+      this.currRow,
+      this.blackLetters,
+      this.yellowLetters,
+      this.greenLetters
+    );
+
+    aiSolver.solve();
+
+    this.gameOver = true;
   }
 }

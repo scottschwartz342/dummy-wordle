@@ -4,7 +4,7 @@ export function getDictionary(url: string): Promise<string[]> {
       if (!response.ok) {
         throw new Error(`${response.status}`);
       }
-      console.log("Dictionary response:", response);
+      // console.log("Dictionary response:", response);
       return response.json();
     })
     .then((data: string[]) => {
