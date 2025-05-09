@@ -39,6 +39,7 @@ function App() {
   const [message, setDialogue] = useState<string>(
     "Type out a 5-lettered guess and hit 'Enter'"
   );
+  const [isGameOver, setIsGameOver] = useState<boolean>(game.gameOver);
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,6 +60,7 @@ function App() {
       const { newBoard, newMessage } = game.enter();
       setSquares(newBoard);
       setDialogue(newMessage);
+      setIsGameOver(game.gameOver);
     }
   };
 
@@ -71,6 +73,10 @@ function App() {
     hiddenInputRef.current?.focus();
   };
 
+  const handlePlayAgain = () => {
+    window.location.reload();
+  };
+
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       console.log("Key pressed:", event.key);
@@ -78,6 +84,7 @@ function App() {
         const { newBoard, newMessage } = game.enter();
         setSquares(newBoard);
         setDialogue(newMessage);
+        setIsGameOver(game.gameOver);
       } else if (event.key === "Backspace") {
         setSquares(game.delete());
       } else if (isAlpha(event.key)) {
@@ -126,6 +133,11 @@ function App() {
         </button>
       </div>
       <Dialogue message={message} />
+      {isGameOver && (
+        <button id="play-again" onClick={handlePlayAgain}>
+          Play Again
+        </button>
+      )}
       <BoardRow value={board[0]} />
       <BoardRow value={board[1]} />
       <BoardRow value={board[2]} />

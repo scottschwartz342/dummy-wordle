@@ -20,6 +20,7 @@ export class WordleGame {
   yellowLetters: Map<number, Set<string>>;
   greenLetters: Map<number, string | null>;
   gameOver: boolean;
+  gameWon: boolean;
   aiSolver: AISolver;
 
   constructor() {
@@ -45,6 +46,7 @@ export class WordleGame {
     ]);
     this.blackLetters = new Set();
     this.gameOver = false;
+    this.gameWon = false;
 
     let randomIndex = Math.floor(Math.random() * dictionaryLa.length);
     this.solutionWord = dictionaryLa[randomIndex];
@@ -145,9 +147,13 @@ export class WordleGame {
 
   enter(): EnterResponse {
     if (this.gameOver) {
+      const newMessage = this.gameWon
+        ? "Winner! Winner! Chicken Dinner!"
+        : `Sorry, GAME OVER! The word was ${this.solutionWord.toUpperCase()}.`;
+
       return {
         newBoard: this.board,
-        newMessage: "Sorry, GAME OVER! \n Refresh to Play Again.",
+        newMessage: newMessage,
       };
     }
 
@@ -163,13 +169,15 @@ export class WordleGame {
 
     if (this.correct()) {
       console.log("Correct");
-      newMessage = "Winner! Winner! Chicken Dinner! \n Refresh to Play Again.";
+      newMessage = "Winner! Winner! Chicken Dinner!";
+      this.gameOver = true;
+      this.gameWon = true;
     } else {
       console.log("Wrong");
       this.currCol = 0;
       this.currRow++;
       if (this.currRow >= 6) {
-        newMessage = `Sorry, GAME OVER! The word was ${this.solutionWord.toUpperCase()}\n Refresh to Play Again.`;
+        newMessage = `Sorry, GAME OVER! The word was ${this.solutionWord.toUpperCase()}.`;
         this.gameOver = true;
       } else {
         newMessage = "Not quite... :(";
