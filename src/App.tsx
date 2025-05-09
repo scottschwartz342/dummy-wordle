@@ -124,13 +124,9 @@ function App() {
         <li>Red: already guessed and is Black</li>
       </ul>
       <div className="button-pair">
-        <button id="ai-button" onClick={(e) => handleAIClick(0, e)}>
-          Have AI Guess
-        </button>
+        <button onClick={(e) => handleAIClick(0, e)}>Have AI Guess</button>
         <br />
-        <button id="ai-button" onClick={(e) => handleAIClick(1, e)}>
-          Have AI Solve
-        </button>
+        <button onClick={(e) => handleAIClick(1, e)}>Have AI Solve</button>
       </div>
       <Dialogue message={message} />
       {isGameOver && (
