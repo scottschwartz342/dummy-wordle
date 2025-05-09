@@ -77,45 +77,44 @@ function App() {
     window.location.reload();
   };
 
-  useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
-      console.log("Key pressed:", event.key);
-      if (event.key === "Enter") {
-        const { newBoard, newMessage } = game.enter();
-        setSquares(newBoard);
-        setDialogue(newMessage);
-        setIsGameOver(game.gameOver);
-      } else if (event.key === "Backspace") {
-        setSquares(game.delete());
-      } else if (isAlpha(event.key)) {
-        setSquares(game.add(event.key));
-      }
-    };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log("Key pressed:", e.key);
+    if (e.key === "Enter") {
+      const { newBoard, newMessage } = game.enter();
+      setSquares(newBoard);
+      setDialogue(newMessage);
+      setIsGameOver(game.gameOver);
+    } else if (e.key === "Backspace") {
+      setSquares(game.delete());
+    } else if (isAlpha(e.key)) {
+      setSquares(game.add(e.key));
+    }
 
-    window.addEventListener("keydown", handleGlobalKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleGlobalKeyDown);
-    };
-  }, []);
+    e.preventDefault();
+  };
 
   useEffect(() => {
-    const handleTouchStart = () => {
-      if (hiddenInputRef.current) {
-        hiddenInputRef.current.focus();
-      }
-    };
+    hiddenInputRef.current?.focus();
 
-    window.addEventListener("touchstart", handleTouchStart);
+    const refocus = () => hiddenInputRef.current?.focus();
+
+    window.addEventListener("click", refocus);
+    window.addEventListener("touchstart", refocus);
 
     return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("click", refocus);
+      window.removeEventListener("touchstart", refocus);
     };
   }, []);
 
   return (
     <div className="App">
-      <input type="text" ref={hiddenInputRef} className="hidden-input" />
+      <input
+        type="text"
+        ref={hiddenInputRef}
+        onKeyDown={onKeyDown}
+        className="hidden-input"
+      />
       <h1>Hello</h1>
       <ul>
         <li>Black: not in the word</li>
