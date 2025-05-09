@@ -58,6 +58,15 @@ function App() {
     }
   };
 
+  const handleAIClick = (
+    runs: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    runAI(runs);
+    e.currentTarget.blur();
+    hiddenInputRef.current?.focus();
+  };
+
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
       console.log("Key pressed:", event.key);
@@ -104,21 +113,11 @@ function App() {
         <li>Red: already guessed and is Black</li>
       </ul>
       <div className="button-pair">
-        <button
-          id="ai-button"
-          onClick={() => {
-            runAI(0);
-          }}
-        >
+        <button id="ai-button" onClick={(e) => handleAIClick(0, e)}>
           Have AI Guess
         </button>
-        <br></br>
-        <button
-          id="ai-button"
-          onClick={() => {
-            runAI(1);
-          }}
-        >
+        <br />
+        <button id="ai-button" onClick={(e) => handleAIClick(1, e)}>
           Have AI Solve
         </button>
       </div>
