@@ -42,16 +42,20 @@ function App() {
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
-  const runAI = () => {
-    const aiGuess: string = game.runAI();
+  const runAI = (runs: number) => {
+    let cap = runs ? game.board.length : 1;
 
-    for (let i = 0; i < aiGuess.length; i++) {
-      setSquares(game.add(aiGuess[i]));
+    for (let run = 0; run < cap; run++) {
+      const aiGuess: string = game.runAI();
+
+      for (let i = 0; i < aiGuess.length; i++) {
+        setSquares(game.add(aiGuess[i]));
+      }
+
+      const { newBoard, newMessage } = game.enter();
+      setSquares(newBoard);
+      setDialogue(newMessage);
     }
-
-    const { newBoard, newMessage } = game.enter();
-    setSquares(newBoard);
-    setDialogue(newMessage);
   };
 
   useEffect(() => {
@@ -99,9 +103,25 @@ function App() {
         <li>Green: in the correct spot</li>
         <li>Red: already guessed and is Black</li>
       </ul>
-      <button id="ai-button" onClick={runAI}>
-        Have AI Solve
-      </button>
+      <div className="button-pair">
+        <button
+          id="ai-button"
+          onClick={() => {
+            runAI(0);
+          }}
+        >
+          Have AI Guess
+        </button>
+        <br></br>
+        <button
+          id="ai-button"
+          onClick={() => {
+            runAI(1);
+          }}
+        >
+          Have AI Solve
+        </button>
+      </div>
       <Dialogue message={message} />
       <BoardRow value={board[0]} />
       <BoardRow value={board[1]} />
