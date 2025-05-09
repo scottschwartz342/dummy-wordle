@@ -73,7 +73,7 @@ export class AISolver {
       let currProb = this.wordProbabilities[currWordNode.value];
 
       if (doubleLetters) {
-        currProb *= 0.05;
+        currProb *= 0.07;
       }
 
       if (!hasBeenPruned && currProb >= currBestProb) {
