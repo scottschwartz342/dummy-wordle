@@ -1,21 +1,3 @@
-export async function getDictionary(url: string): Promise<string[]> {
-  return fetch(`${process.env.PUBLIC_URL}/${url}`)
-    .then((response: Response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status}`);
-      }
-      // console.log("Dictionary response:", response);
-      return response.json();
-    })
-    .then((data: string[]) => {
-      return data;
-    })
-    .catch((error: Error) => {
-      console.error("Error:", error);
-      return [];
-    });
-}
-
 export type Colors = "clear" | "white" | "red" | "black" | "yellow" | "green";
 
 export type Square = {
