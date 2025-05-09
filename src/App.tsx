@@ -45,6 +45,10 @@ function App() {
   const runAI = (runs: number) => {
     let cap = runs ? game.board.length : 1;
 
+    for (let i = 0; i < 5; i++) {
+      setSquares(game.delete());
+    }
+
     for (let run = 0; run < cap; run++) {
       const aiGuess: string = game.runAI();
 
