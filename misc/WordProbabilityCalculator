@@ -1,0 +1,21 @@
+from copy import deepcopy
+import json
+
+with open('src/data/wordle-All.json', 'r') as f:
+    words = json.load(f)
+
+with open('src/data/letterProbabilities.json', 'r') as f:
+    letterProb = json.load(f)
+
+wordProbs = {
+}
+
+for word in words:
+    wordProb = 1
+    for letter in word:
+        wordProb *= letterProb[letter]
+        
+    wordProbs[word] = wordProb
+
+with open('src/data/wordProbabilities.json', 'w') as fp:
+    json.dump(wordProbs, fp)
