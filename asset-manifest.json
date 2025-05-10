@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/wordle-dummy/static/css/main.3bc8d963.css",
-    "main.js": "/wordle-dummy/static/js/main.5b2e95ce.js",
-    "static/js/453.9fdc4426.chunk.js": "/wordle-dummy/static/js/453.9fdc4426.chunk.js",
-    "index.html": "/wordle-dummy/index.html",
-    "main.3bc8d963.css.map": "/wordle-dummy/static/css/main.3bc8d963.css.map",
-    "main.5b2e95ce.js.map": "/wordle-dummy/static/js/main.5b2e95ce.js.map",
-    "453.9fdc4426.chunk.js.map": "/wordle-dummy/static/js/453.9fdc4426.chunk.js.map"
+    "main.css": "/dummy-wordle/static/css/main.97c344e4.css",
+    "main.js": "/dummy-wordle/static/js/main.7ecd3913.js",
+    "static/js/453.9fdc4426.chunk.js": "/dummy-wordle/static/js/453.9fdc4426.chunk.js",
+    "index.html": "/dummy-wordle/index.html",
+    "main.97c344e4.css.map": "/dummy-wordle/static/css/main.97c344e4.css.map",
+    "main.7ecd3913.js.map": "/dummy-wordle/static/js/main.7ecd3913.js.map",
+    "453.9fdc4426.chunk.js.map": "/dummy-wordle/static/js/453.9fdc4426.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3bc8d963.css",
-    "static/js/main.5b2e95ce.js"
+    "static/css/main.97c344e4.css",
+    "static/js/main.7ecd3913.js"
   ]
 }
