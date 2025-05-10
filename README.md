@@ -54,4 +54,4 @@ $$
 P(W) = \prod_{i=1}^5 P(x_i)
 $$
 
-One other thing is added to favor words that do have repeating letters. If a word has a repeating letter, its probability is multiplied by $0.07$, which comes from the frequency of words with repeating letters in the dictionary used.
+One other thing is added to favor words that do not have repeating letters. If a word has a repeating letter, its probability is multiplied by $0.07$, which comes from the frequency of words with repeating letters in the dictionary used.
