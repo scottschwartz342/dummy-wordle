@@ -64,3 +64,16 @@ body {
   display: flex;
   gap: 15px;
 }
+
+a {
+  color: purple;
+  font-size: large;
+}
+
+a:hover {
+  color: red;
+}
+
+h1 {
+  margin-bottom: 2px;
+}

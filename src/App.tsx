@@ -115,7 +115,8 @@ function App() {
         onKeyDown={onKeyDown}
         className="hidden-input"
       />
-      <h1>Hello</h1>
+      <h1>Wordle Dummy</h1>
+      <a href="https://github.com/scottschwartz342/wordle-dummy">Source Code</a>
       <ul>
         <li>Black: not in the word</li>
         <li>Yellow: in the word but not in the correct spot</li>
