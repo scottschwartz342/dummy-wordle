@@ -1,8 +1,8 @@
 # Wordle Dummy
 
-Dummy Wordle is based off of the New York Times viral game Wordle. You have six chances to guess a 5-lettered word.
+Wordle Dummy is based off of the New York Times viral game Wordle. You have six chances to guess a 5-lettered word.
 
-Dummy Wordle also features an AI Guess and AI Solve feature.
+Wordle Dummy also features an AI Guess and AI Solve feature.
 
 ### Tools Used
 
