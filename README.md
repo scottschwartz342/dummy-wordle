@@ -31,5 +31,3 @@ The AI component actually turned out to be pretty simple. As part of the backend
    - Updating best guess if necessary
 
 Note on how probability is calculated:
-
-TLDR: self admittedly, not the best.
